@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --font-form-head: "Oswald", sans-serif;
+  --font-form-text: "Nunito", sans-serif;
+}
