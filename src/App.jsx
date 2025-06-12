@@ -1,20 +1,22 @@
-import { useEffect } from "react";
-import axios from "axios";
-import Form from "./components/Form";
+import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000")
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
-
   return (
     <>
-      <Signup />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/signup"
+            element={<Login signup />}
+          />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
