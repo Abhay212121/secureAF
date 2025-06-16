@@ -9,6 +9,7 @@ export default function Form({ formHeading, userData, setUserData }) {
   const navigate = useNavigate();
   const [passwordMatchError, setPasswordMatchError] = useState("");
   const [inputErrorActive, setInputErrorActive] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (
@@ -29,38 +30,53 @@ export default function Form({ formHeading, userData, setUserData }) {
       userPassword: "",
       confirmUserPassword: "",
     });
+    setChecked(false);
+    setValidationErrors([]);
   };
 
-  const handleBtnClick = () => {
+  const handleBtnClick = async () => {
+    setLoading(true);
+
     if (formHeading == "Sign-up Form") {
-      if (userData.userPassword == userData.confirmUserPassword && checked) {
-        const { confirmUserPassword, ...rest } = userData;
-        console.log("Form sent!");
-        axios
-          .post("http://localhost:3000/signup", rest)
-          .then((res) => {
-            console.log("response received", res.data);
-            resetForm();
-            navigate("/login");
-          })
-          .catch((err) => {
-            setInputErrorActive(true);
-            setValidationErrors(err.response.data);
-            console.log(err.response.data);
-            resetForm();
-          });
+      const { confirmUserPassword, ...rest } = userData;
+      console.log("Form sent!");
+
+      try {
+        const res = await axios.post("http://localhost:3000/api/signup", rest);
+        console.log("response received", res.data);
+        resetForm();
+        navigate("/login");
+      } catch (error) {
+        setInputErrorActive(true);
+        setValidationErrors(error.response.data);
+      } finally {
+        setLoading(false);
       }
     } else if (formHeading == "Log-in Form") {
-      setUserData((prev) => ({ ...prev, rememberMe: checked }));
-      if (userData.userPassword != "") {
-        console.log("Form Sent!");
-        axios
-          .post("http://localhost:3000/login", userData)
-          .then((res) => {
-            console.log("Response Received", res.data);
-            navigate("/");
-          })
-          .catch((err) => console.log("ERROR:", err));
+      const finalPayLoad = { ...userData, rememberMe: checked };
+      console.log("Form Sent!");
+
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/api/login",
+          finalPayLoad,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (res.data.status == 200) {
+          navigate("/");
+        } else {
+          console.log(res.data);
+          setInputErrorActive(true);
+          setValidationErrors([res.data]);
+        }
+      } catch (error) {
+        console.log("ERR:", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -144,7 +160,22 @@ export default function Form({ formHeading, userData, setUserData }) {
       </div>
       <button
         onClick={handleBtnClick}
-        className="font-x py-2 bg-[#4070F4] rounded-lg text-white cursor-pointer hover:scale-102 duration-200"
+        disabled={
+          isLoading ||
+          (formHeading === "Sign-up Form" && !checked) ||
+          !userData.userPassword ||
+          (formHeading === "Log-in Form" && !userData.userName)
+        }
+        className={`font-x py-2 bg-[#4070F4] rounded-lg text-white  hover:scale-102 duration-200 
+        ${
+          isLoading
+            ? "cursor-progress"
+            : checked
+            ? "cursor-default"
+            : formHeading == "Sign-up Form"
+            ? "cursor-not-allowed"
+            : "cursor-default"
+        }`}
       >
         {formHeading == "Sign-up Form" ? "Register Now" : "Log in"}
       </button>
