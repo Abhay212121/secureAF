@@ -67,6 +67,7 @@ export default function Form({ formHeading, userData, setUserData }) {
           }
         );
         if (res.data.status == 200) {
+          localStorage.setItem("token", res.data.token);
           navigate("/");
         } else {
           console.log(res.data);
