@@ -7,27 +7,48 @@ import { Post } from "./Post";
 export function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [member, setMember] = useState(false);
 
-  const token = localStorage.getItem("token");
+  const fetchProtectedData = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get("http://localhost:3000/posts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("protected data:", res.data);
+      const reversed = [...res.data.data].reverse();
+      setPosts(reversed);
+      console.log(res.data.role);
+      if (res.data.role === "is a member") {
+        setMember(true);
+      }
+    } catch (error) {
+      console.error("Unautohorized", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProtectedData = async () => {
-      try {
-        const res = await axios.get("http://localhost:3000/posts", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("protected data:", res.data);
-        setPosts(res.data.data);
-        console.log(res.data);
-        if (res.data.status == 200) {
-          setLoggedIn(true);
-        }
-      } catch (error) {
-        console.error("Unautohorized", error);
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+    fetchProtectedData();
+
+    const handleTabClose = () => {
+      const rememberMe = localStorage.getItem("rememberMe");
+      if (rememberMe == "false") {
+        localStorage.removeItem("token");
       }
     };
-    fetchProtectedData();
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
   }, []);
 
   return (
@@ -36,9 +57,16 @@ export function Home() {
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
       />
-      <PostForm />
-      {posts.map((post) => {
-        return <Post data={post} />;
+      <PostForm onPostCreate={fetchProtectedData} />
+      {posts.map((post, index) => {
+        return (
+          <Post
+            key={post.title + post.username + index}
+            data={post}
+            member={member}
+            loggedIn={loggedIn}
+          />
+        );
       })}
     </div>
   );

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-export function PostForm() {
+export function PostForm({ onPostCreate }) {
   const [postData, setPostData] = useState({ postTitle: "", postMessage: "" });
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +14,8 @@ export function PostForm() {
         },
       });
       console.log("form sent!");
+      console.log(onPostCreate());
+      onPostCreate();
       console.log(res.data);
       setPostData((prev) => ({ ...prev, postMessage: "", postTitle: "" }));
     } catch (error) {
@@ -24,7 +26,7 @@ export function PostForm() {
   };
 
   return (
-    <div className="flex border-2 min-w-150 w-[40%]  mx-auto p-6 rounded-2xl gap-4">
+    <div className="flex border-2 min-w-150 w-[40%] mx-auto p-6 rounded-2xl gap-4">
       <div className="flex flex-col w-[65%] gap-4 font-form-text">
         <input
           type="text"

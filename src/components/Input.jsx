@@ -24,7 +24,9 @@ export default function Input({
     }
   };
 
-  const inputError = validationErrors.find((error) => error.path == inputId);
+  const inputError = Array.isArray(validationErrors)
+    ? validationErrors.find((error) => error.path === inputId)
+    : null;
 
   return (
     <div className={`flex flex-col gap-1  ${className}`}>

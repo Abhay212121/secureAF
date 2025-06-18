@@ -68,6 +68,7 @@ export default function Form({ formHeading, userData, setUserData }) {
         );
         if (res.data.status == 200) {
           localStorage.setItem("token", res.data.token);
+          localStorage.setItem("rememberMe", res.data.rememberMe);
           navigate("/");
         } else {
           console.log(res.data);
