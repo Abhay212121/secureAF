@@ -38,7 +38,7 @@ export default function Input({
           {label}
         </label>
         {inputError && (
-          <span className="text-red-400 float-right font-form-head">
+          <span className="text-red-400 float-right font-head">
             {inputError.msg}
           </span>
         )}
@@ -51,7 +51,7 @@ export default function Input({
         value={inputType == "checkbox" ? undefined : inputValue}
         checked={inputType == "checkbox" ? checked : undefined}
         onChange={handleInputChange}
-        className={`font-form-text border-1 px-4 py-1 rounded-sm shadow cursor-pointer hover:shadow-md hover:border-[#4070F4] focus:border-[#4070f4] focus:cursor-default transition duration-200
+        className={`font-form-head border-1 px-4 py-1 rounded-sm shadow cursor-pointer hover:shadow-md hover:border-[#4070F4] focus:border-[#4070f4] focus:cursor-default transition duration-200
       ${
         isCheckBox
           ? `w-fit mb-[2px] hover:bg-[gray] ${checked ? "" : "animate-bounce"}`

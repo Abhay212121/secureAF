@@ -26,7 +26,7 @@ export function PostForm({ onPostCreate }) {
   };
 
   return (
-    <div className="flex border-2 min-w-150 w-[40%] mx-auto p-6 rounded-2xl gap-4">
+    <div className="flex border-2 min-w-150 w-[40%] mx-auto p-6 rounded-2xl gap-4 my-10 bg-[#c0c9ee13]">
       <div className="flex flex-col w-[65%] gap-4 font-form-text">
         <input
           type="text"

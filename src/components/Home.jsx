@@ -52,7 +52,7 @@ export function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-gradient-to-b from-sky-900 to-purple-800 min-h-screen">
       <Header
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}

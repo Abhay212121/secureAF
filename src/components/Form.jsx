@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Input from "./input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message, Button } from "antd";
 
 export default function Form({ formHeading, userData, setUserData }) {
   const [checked, setChecked] = useState(false);
@@ -45,6 +46,7 @@ export default function Form({ formHeading, userData, setUserData }) {
         const res = await axios.post("http://localhost:3000/api/signup", rest);
         console.log("response received", res.data);
         resetForm();
+        message.success("Successfull");
         navigate("/login");
       } catch (error) {
         setInputErrorActive(true);
@@ -74,6 +76,7 @@ export default function Form({ formHeading, userData, setUserData }) {
           console.log(res.data);
           setInputErrorActive(true);
           setValidationErrors([res.data]);
+          message.error("login error!");
         }
       } catch (error) {
         console.log("ERR:", error);
@@ -85,7 +88,7 @@ export default function Form({ formHeading, userData, setUserData }) {
 
   return (
     <div className="w-100 flex flex-col gap-4 px-8 py-4 bg-white rounded-md ">
-      <p className="group relative font-form-head text-2xl cursor-default w-fit">
+      <p className="group relative font-form-head text-2xl cursor-default w-fit !mb-0">
         {formHeading}
         <span className="absolute bottom-0 left-0 h-[3px] w-0 bg-[#4070F4] transition-all duration-300 group-hover:w-full"></span>
       </p>
@@ -160,7 +163,7 @@ export default function Form({ formHeading, userData, setUserData }) {
             : "Remember me"}
         </label>
       </div>
-      <button
+      <Button
         onClick={handleBtnClick}
         disabled={
           isLoading ||
@@ -168,19 +171,15 @@ export default function Form({ formHeading, userData, setUserData }) {
           !userData.userPassword ||
           (formHeading === "Log-in Form" && !userData.userName)
         }
-        className={`font-x py-2 bg-[#4070F4] rounded-lg text-white  hover:scale-102 duration-200 
-        ${
-          isLoading
-            ? "cursor-progress"
-            : checked
-            ? "cursor-default"
-            : formHeading == "Sign-up Form"
-            ? "cursor-not-allowed"
-            : "cursor-default"
-        }`}
+        loading={isLoading}
+        style={{
+          backgroundColor: "#4070F4",
+          borderColor: "#4070F4",
+          color: "white",
+        }}
       >
         {formHeading == "Sign-up Form" ? "Register Now" : "Log in"}
-      </button>
+      </Button>
       <p className="cursor-default font-form-text mx-auto">
         {formHeading == "Sign-up Form"
           ? "Already have an account?"
