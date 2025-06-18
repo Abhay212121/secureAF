@@ -128,6 +128,7 @@ export default function Form({ formHeading, userData, setUserData }) {
         setUserData={setUserData}
         validationErrors={validationErrors}
         inputErrorActive={inputErrorActive}
+        setValidationErrors={setValidationErrors}
       />
       <Input
         inputType={"password"}

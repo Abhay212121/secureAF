@@ -13,11 +13,22 @@ export default function Input({
   label = "",
   validationErrors = [],
   inputErrorActive,
+  setValidationErrors,
 }) {
   const handleInputChange = (e) => {
     if (inputType == "checkbox") {
       setCheck(e.target.checked);
     } else {
+      if (inputId === "userPassword") {
+        const password = e.target.value;
+        if (password.length < 4) {
+          setValidationErrors([
+            { path: "userPassword", msg: "Weak password!" },
+          ]);
+        } else {
+          setValidationErrors([{}]);
+        }
+      }
       const tempObj = { ...userData };
       tempObj[inputName] = e.target.value;
       setUserData(tempObj);
