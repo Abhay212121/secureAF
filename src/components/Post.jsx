@@ -11,7 +11,7 @@ export function Post({ data, member, loggedIn }) {
           {console.log(loggedIn)}
           {member && loggedIn ? data.username : "Anonymous"}
         </p>
-        <p>@{data.post_time}</p>
+        <p>{member && loggedIn ? "@" + data.post_time : "-:- - --/--/----"}</p>
       </div>
     </div>
   );

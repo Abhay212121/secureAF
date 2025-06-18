@@ -15,6 +15,7 @@ export function Home() {
       const res = await axios.get("http://localhost:3000/posts", {
         headers: {
           Authorization: `Bearer ${token}`,
+          userNameHeader: `${localStorage.getItem("username")}`,
         },
       });
       console.log("protected data:", res.data);
