@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { message } from "antd";
+import { Header } from "./Header";
 
 export function Membership() {
   const [key, setKey] = useState("");
@@ -64,14 +65,11 @@ export function Membership() {
   };
 
   return (
-    <>
-      <p
-        className="text-5xl absolute pt-8 pl-14 font-head italic cursor-pointer text-[#FFE3A9] !mb-0 "
-        onClick={() => navigate("/")}
-      >
-        SecureAF
-      </p>
-      <div className="flex items-center justify-center h-screen font-form-text bg-gradient-to-b from-sky-900 to-purple-800 ">
+    <div className="bg-gradient-to-b from-sky-900 to-purple-800 ">
+      <div className="absolute">
+        <Header />
+      </div>
+      <div className="flex items-center justify-center h-screen font-form-text ">
         <div className="w-100 flex flex-col  gap-3 px-8 py-4 rounded-md bg-white ">
           {member ? (
             <div className="flex flex-col gap-4">
@@ -144,6 +142,6 @@ export function Membership() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

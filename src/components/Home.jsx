@@ -24,7 +24,9 @@ export function Home() {
       console.log(res.data.role);
       if (res.data.role === "is a member") {
         setMember(true);
-        console.log("member");
+        localStorage.setItem("member", true);
+      } else {
+        localStorage.setItem("member", false);
       }
     } catch (error) {
       console.error("Unautohorized", error);
@@ -34,6 +36,7 @@ export function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      console.log(member);
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
@@ -58,6 +61,7 @@ export function Home() {
       <Header
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
+        displayAll={true}
       />
       <PostForm onPostCreate={fetchProtectedData} />
       {posts.map((post, index) => {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Form from "./Form";
+import { Header } from "./Header";
 
 export default function Login({ signup = false }) {
   const [loginData, setLoginData] = useState({
@@ -15,12 +16,17 @@ export default function Login({ signup = false }) {
   });
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-b from-sky-900 to-purple-800 min-h-screen">
-      <Form
-        formHeading={signup ? "Sign-up Form" : "Log-in Form"}
-        userData={signup ? signupData : loginData}
-        setUserData={signup ? setSignupData : setLoginData}
-      />
+    <div className=" bg-gradient-to-b from-sky-900 to-purple-800 ">
+      <div className="absolute">
+        <Header />
+      </div>
+      <div className="flex items-center justify-center h-screen min-h-screen">
+        <Form
+          formHeading={signup ? "Sign-up Form" : "Log-in Form"}
+          userData={signup ? signupData : loginData}
+          setUserData={signup ? setSignupData : setLoginData}
+        />
+      </div>
     </div>
   );
 }

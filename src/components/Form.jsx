@@ -72,6 +72,7 @@ export default function Form({ formHeading, userData, setUserData }) {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("rememberMe", res.data.rememberMe);
           localStorage.setItem("username", res.data.userName);
+          message.success(`Welcome ${res.data.userName}`);
           navigate("/");
         } else {
           console.log(res.data);
