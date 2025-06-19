@@ -19,7 +19,7 @@ export function Membership() {
       setLoading(true);
       const res = await axios.post(
         // "http://localhost:3000/membership",
-        "https://secureaf-backend.onrender.com/membership",
+        `${import.meta.env.BACKEND_URL}/membership`,
         { key },
         {
           headers: {
@@ -50,7 +50,7 @@ export function Membership() {
       const username = localStorage.getItem("username");
       // const res = await axios.post("http://localhost:3000/revokeMembership", {
       const res = await axios.post(
-        "https://secureaf-backend.onrender.com/revokeMembership",
+        `${import.meta.env.BACKEND_URL}/revokeMembership`,
         {
           username,
         }

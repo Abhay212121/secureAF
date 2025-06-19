@@ -45,7 +45,7 @@ export default function Form({ formHeading, userData, setUserData }) {
       try {
         // const res = await axios.post("http://localhost:3000/api/signup", rest);
         const res = await axios.post(
-          "https://secureaf-backend.onrender.com/api/signup",
+          `${import.meta.env.BACKEND_URL}/api/signup`,
           rest
         );
         console.log("response received", res.data);
@@ -65,7 +65,7 @@ export default function Form({ formHeading, userData, setUserData }) {
       try {
         const res = await axios.post(
           // "http://localhost:3000/api/login",
-          "https://secureaf-backend.onrender.com/api/login",
+          `${import.meta.env.BACKEND_URL}/api/login`,
           finalPayLoad,
           {
             headers: {

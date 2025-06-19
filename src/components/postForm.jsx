@@ -11,7 +11,7 @@ export function PostForm({ onPostCreate, loggedIn }) {
     try {
       // const res = await axios.post("http://localhost:3000/posts", postData, {
       const res = await axios.post(
-        "https://secureaf-backend.onrender.com/posts",
+        `${import.meta.env.BACKEND_URL}/posts`,
         postData,
         {
           headers: {

@@ -16,15 +16,12 @@ export function Home() {
     setLoading(true);
     try {
       // const res = await axios.get("http://localhost:3000/posts", {
-      const res = await axios.get(
-        "https://secureaf-backend.onrender.com/posts",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            userNameHeader: `${localStorage.getItem("username")}`,
-          },
-        }
-      );
+      const res = await axios.get(`${import.meta.env.BACKEND_URL}/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          userNameHeader: `${localStorage.getItem("username")}`,
+        },
+      });
       console.log("protected data:", res.data);
       const reversed = [...res.data.data].reverse();
       setPosts(reversed);
