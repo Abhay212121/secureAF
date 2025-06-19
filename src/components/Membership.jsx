@@ -12,7 +12,7 @@ export function Membership() {
   const [membershipError, setMembershipError] = useState();
   const [loading, setLoading] = useState(false);
   const [member, setMember] = useState(
-    localStorage.getItem("member") === "true"
+    () => localStorage.getItem("member") === "true"
   );
 
   const handleClick = async () => {
@@ -30,7 +30,7 @@ export function Membership() {
       );
       console.log(res.data.msg);
       if (res.data.status == 200) {
-        localStorage.setItem("member", true);
+        localStorage.setItem("member", "true");
         message.success("You are now a member!");
         navigate("/");
       } else {
@@ -46,6 +46,7 @@ export function Membership() {
   };
 
   const handleRevokeClick = async () => {
+    console.log(localStorage.getItem("member"));
     try {
       setLoading(true);
       const username = localStorage.getItem("username");
@@ -54,8 +55,8 @@ export function Membership() {
         username,
       });
       if (res.data.status == 200) {
-        setMember(false);
-        localStorage.setItem("member", false);
+        setMember("false");
+        localStorage.setItem("member", "false");
         message.success("Membership Revoked");
       } else {
         message.error(`Error revoking membersip`);

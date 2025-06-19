@@ -72,6 +72,12 @@ export default function Form({ formHeading, userData, setUserData }) {
           }
         );
         if (res.data.status == 200) {
+          console.log(res.data.role);
+          if (res.data.role == "is a member") {
+            localStorage.setItem("member", true);
+          } else {
+            localStorage.setItem("member", false);
+          }
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("rememberMe", res.data.rememberMe);
           localStorage.setItem("username", res.data.userName);

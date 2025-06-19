@@ -9,7 +9,9 @@ import { backendURL } from "../constant/constant";
 export function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [member, setMember] = useState(false);
+  const [member, setMember] = useState(
+    () => localStorage.getItem("member") == "true"
+  );
   const [loading, setLoading] = useState(false);
 
   const fetchProtectedData = async () => {
@@ -20,17 +22,10 @@ export function Home() {
       const res = await axios.get(`${backendURL}/posts`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          userNameHeader: `${localStorage.getItem("username")}`,
         },
       });
       const reversed = [...res.data.data].reverse();
       setPosts(reversed);
-      if (res.data.role === "is a member") {
-        setMember(true);
-        localStorage.setItem("member", true);
-      } else {
-        localStorage.setItem("member", false);
-      }
     } catch (error) {
       console.error("Unautohorized", error);
     } finally {

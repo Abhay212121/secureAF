@@ -8,6 +8,7 @@ export function Header({ loggedIn, setLoggedIn, displayAll = false }) {
     if (loggedIn) {
       localStorage.removeItem("token");
       setLoggedIn(false);
+      navigate("/");
     } else {
       //if user is already logged out, he's redirected to the login page.
       navigate("/login");
