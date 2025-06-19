@@ -4,6 +4,7 @@ import { Header } from "./Header";
 import { PostForm } from "./postForm";
 import { Post } from "./Post";
 import { Skeleton } from "antd";
+import { backendURL } from "../constant/constant";
 
 export function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -16,16 +17,14 @@ export function Home() {
     setLoading(true);
     try {
       // const res = await axios.get("http://localhost:3000/posts", {
-      const res = await axios.get(`${import.meta.env.BACKEND_URL}/posts`, {
+      const res = await axios.get(`${backendURL}/posts`, {
         headers: {
           Authorization: `Bearer ${token}`,
           userNameHeader: `${localStorage.getItem("username")}`,
         },
       });
-      console.log("protected data:", res.data);
       const reversed = [...res.data.data].reverse();
       setPosts(reversed);
-      console.log(res.data.role);
       if (res.data.role === "is a member") {
         setMember(true);
         localStorage.setItem("member", true);

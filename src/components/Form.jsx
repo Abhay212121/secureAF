@@ -3,6 +3,7 @@ import Input from "./Input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { message, Button } from "antd";
+import { backendURL } from "../constant/constant";
 
 export default function Form({ formHeading, userData, setUserData }) {
   const [checked, setChecked] = useState(false);
@@ -44,10 +45,7 @@ export default function Form({ formHeading, userData, setUserData }) {
 
       try {
         // const res = await axios.post("http://localhost:3000/api/signup", rest);
-        const res = await axios.post(
-          `${import.meta.env.BACKEND_URL}/api/signup`,
-          rest
-        );
+        const res = await axios.post(`${backendURL}/api/signup`, rest);
         console.log("response received", res.data);
         resetForm();
         message.success("Successfull");
@@ -65,7 +63,7 @@ export default function Form({ formHeading, userData, setUserData }) {
       try {
         const res = await axios.post(
           // "http://localhost:3000/api/login",
-          `${import.meta.env.BACKEND_URL}/api/login`,
+          `${backendURL}/api/login`,
           finalPayLoad,
           {
             headers: {

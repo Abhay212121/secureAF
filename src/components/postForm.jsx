@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, message } from "antd";
+import { backendURL } from "../constant/constant";
 
 export function PostForm({ onPostCreate, loggedIn }) {
   const [postData, setPostData] = useState({ postTitle: "", postMessage: "" });
@@ -10,15 +11,11 @@ export function PostForm({ onPostCreate, loggedIn }) {
     setLoading(true);
     try {
       // const res = await axios.post("http://localhost:3000/posts", postData, {
-      const res = await axios.post(
-        `${import.meta.env.BACKEND_URL}/posts`,
-        postData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const res = await axios.post(`${backendURL}/posts`, postData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       console.log("form sent!");
       if (res.data.status == 200) {
         message.success("Post added!");

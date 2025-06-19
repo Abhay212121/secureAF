@@ -1,0 +1,1 @@
+export const backendURL = "https://secureaf-backend.onrender.com";

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { message } from "antd";
 import { Header } from "./Header";
+import { backendURL } from "../constant/constant";
 
 export function Membership() {
   const [key, setKey] = useState("");
@@ -19,7 +20,7 @@ export function Membership() {
       setLoading(true);
       const res = await axios.post(
         // "http://localhost:3000/membership",
-        `${import.meta.env.BACKEND_URL}/membership`,
+        `${backendURL}/membership`,
         { key },
         {
           headers: {
@@ -49,12 +50,9 @@ export function Membership() {
       setLoading(true);
       const username = localStorage.getItem("username");
       // const res = await axios.post("http://localhost:3000/revokeMembership", {
-      const res = await axios.post(
-        `${import.meta.env.BACKEND_URL}/revokeMembership`,
-        {
-          username,
-        }
-      );
+      const res = await axios.post(`${backendURL}/revokeMembership`, {
+        username,
+      });
       if (res.data.status == 200) {
         setMember(false);
         localStorage.setItem("member", false);
