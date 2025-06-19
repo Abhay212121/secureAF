@@ -18,7 +18,8 @@ export function Membership() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:3000/membership",
+        // "http://localhost:3000/membership",
+        "https://secureaf-backend.onrender.com/membership",
         { key },
         {
           headers: {
@@ -47,9 +48,13 @@ export function Membership() {
     try {
       setLoading(true);
       const username = localStorage.getItem("username");
-      const res = await axios.post("http://localhost:3000/revokeMembership", {
-        username,
-      });
+      // const res = await axios.post("http://localhost:3000/revokeMembership", {
+      const res = await axios.post(
+        "https://secureaf-backend.onrender.com/revokeMembership",
+        {
+          username,
+        }
+      );
       if (res.data.status == 200) {
         setMember(false);
         localStorage.setItem("member", false);
