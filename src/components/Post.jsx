@@ -7,8 +7,6 @@ export function Post({ data, member, loggedIn }) {
       </p>
       <div className="flex gap-4 font-form-head text-lg">
         <p className="italic">
-          {console.log(member)}
-          {console.log(loggedIn)}
           {member && loggedIn ? data.username : "Anonymous"}
         </p>
         <p>{member && loggedIn ? "@" + data.post_time : "-:- - --/--/----"}</p>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Input from "./input";
+import Input from "./Input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { message, Button } from "antd";

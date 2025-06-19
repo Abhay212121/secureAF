@@ -24,6 +24,7 @@ export function Home() {
       console.log(res.data.role);
       if (res.data.role === "is a member") {
         setMember(true);
+        console.log("member");
       }
     } catch (error) {
       console.error("Unautohorized", error);
